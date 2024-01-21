@@ -1,0 +1,38 @@
+name: Dump
+
+on:
+  workflow_dispatch:
+    inputs:
+      link:
+        description: 'Link'
+        required: true 
+
+env:
+  TZ: Europe/Warsaw
+  LINK: ${{ github.event.inputs.link }}
+
+jobs:
+  Dump:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Enviroment Cleanup
+        uses: rokibhasansagar/slimhub_actions@main
+
+      - name: Setup
+        run: |
+          git clone https://github.com/AndroidDumps/dumpyara dumpyara --depth=1
+          cd dumpyara
+          bash setup.sh
+          git config --global user.email "zlewchan@icloud.com"
+          git config --global user.name "x0x00044"
+          echo "${{ secrets.GH_TOKEN }}" > .githubtoken
+          echo "${{ secrets.TG_TOKEN }}" > .tgtoken
+          sed -i 's/@android_dumps/@zlewdumps/g' dumpyara.sh
+          sed -i 's/ORG=AndroidDumps/ORG=zlewdumps/g' dumpyara.sh
+
+      - name: Dumping
+        run: |
+          cd dumpyara
+          bash dumpyara.sh $LINK
