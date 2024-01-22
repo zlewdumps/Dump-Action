@@ -35,4 +35,4 @@ jobs:
       - name: Dumping
         run: |
           cd dumpyara
-          bash dumpyara.sh $LINK
+          bash dumpyara.sh $LINK | tee
