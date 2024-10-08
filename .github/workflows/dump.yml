@@ -26,7 +26,7 @@ jobs:
           cd dumpyara
           bash setup.sh
           git config --global user.email "zlewchan@icloud.com"
-          git config --global user.name "x0x00044"
+          git config --global user.name "zlewchan"
           echo "${{ secrets.GH_TOKEN }}" > .githubtoken
           echo "${{ secrets.TG_TOKEN }}" > .tgtoken
           sed -i 's/@android_dumps/@zlewdumps/g' dumpyara.sh
